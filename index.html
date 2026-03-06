@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Flyer Industries — Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,600&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-brand">
+      <svg width="48" height="48" viewBox="0 0 32 32" fill="none" aria-label="Flyer Industries">
+        <rect x="1" y="1" width="30" height="30" rx="4" stroke="url(#chromeLogin)" stroke-width="1.5"/>
+        <path d="M8 9h16M8 14h12M8 19h8" stroke="url(#chromeLogin)" stroke-width="1.8" stroke-linecap="round"/>
+        <defs><linearGradient id="chromeLogin" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#c0c0c0"/><stop offset=".5" stop-color="#f0f0f0"/><stop offset="1" stop-color="#a0a0a0"/></linearGradient></defs>
+      </svg>
+      <span class="login-brand-name">Flyer Industries</span>
+      <span class="login-brand-sub">Command Center</span>
+    </div>
+    <form id="loginForm" autocomplete="on">
+      <div class="login-field">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" placeholder="you@example.com" required autocomplete="email">
+      </div>
+      <div class="login-field">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter password" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="login-btn" id="loginBtn">Sign In</button>
+      <div class="login-error" id="loginError"></div>
+    </form>
+  </div>
+</div>
+
+<!-- DOCUMENT PREVIEW MODAL -->
+<div class="doc-modal-overlay hidden" id="docModal">
+  <div class="doc-modal">
+    <div class="doc-modal-header">
+      <span class="doc-modal-title" id="docModalTitle">Document</span>
+      <button class="doc-modal-close" id="docModalClose">&times;</button>
+    </div>
+    <div class="doc-modal-body">
+      <iframe id="docModalFrame" title="Document preview"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD WRAPPER (hidden until authenticated) -->
+<div class="dashboard-wrapper hidden" id="dashboardWrapper">
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <svg class="fi-logo" width="32" height="32" viewBox="0 0 32 32" fill="none" aria-label="Flyer Industries">
+      <rect x="1" y="1" width="30" height="30" rx="4" stroke="url(#chrome)" stroke-width="1.5"/>
+      <path d="M8 9h16M8 14h12M8 19h8" stroke="url(#chrome)" stroke-width="1.8" stroke-linecap="round"/>
+      <defs><linearGradient id="chrome" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#c0c0c0"/><stop offset=".5" stop-color="#f0f0f0"/><stop offset="1" stop-color="#a0a0a0"/></linearGradient></defs>
+    </svg>
+    <span class="fi-wordmark">Flyer Industries</span>
+  </div>
+
+  <nav class="sidebar-nav" id="sidebarNav">
+    <button class="nav-item active" data-view="home" onclick="showView('home')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12l9-8 9 8M5 11v8a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-8"/></svg>
+      Home
+    </button>
+    <div class="nav-section-label">Projects</div>
+    <!-- Dynamic project nav items injected here by JS -->
+    <div id="navProjectsList"></div>
+    <div class="nav-section-label">Tools</div>
+    <button class="nav-item" data-view="calendar" onclick="showView('calendar')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Calendar
+    </button>
+    <button class="nav-item" data-view="docs" onclick="showView('docs')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+      Documents
+    </button>
+    <button class="nav-item" data-view="finance" onclick="showView('finance')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 010 7H6"/></svg>
+      Finance
+    </button>
+  </nav>
+
+  <div class="sidebar-footer">
+    <a href="https://www.perplexity.ai/computer" target="_blank" rel="noopener noreferrer" class="sidebar-attr">Perplexity Computer</a>
+    <button class="logout-btn" id="logoutBtnSidebar" onclick="handleLogout()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      Sign Out
+    </button>
+  </div>
+</aside>
+
+<!-- MOBILE TOP BAR -->
+<header class="topbar" id="topbar">
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+  <span class="topbar-title">Flyer Industries</span>
+</header>
+
+<!-- MAIN CONTENT AREA -->
+<main class="main-content" id="main">
+
+  <!-- HOME VIEW -->
+  <div class="view active" id="view-home">
+    <div class="welcome-row">
+      <div>
+        <h1 class="welcome-title">Welcome, Tony!</h1>
+        <p class="welcome-sub">Flyer Industries Command Center</p>
+      </div>
+      <div class="welcome-date" id="currentDate"></div>
+    </div>
+
+    <!-- Project Hero Cards (dynamic) -->
+    <div class="hero-grid" id="heroGrid">
+      <div class="loading-spinner"><div class="spinner-ring"></div> Loading projects...</div>
+    </div>
+
+    <!-- Quick Stats (dynamic) -->
+    <div class="quick-stats" id="quickStats">
+      <div class="stat-card"><span class="stat-label">Active Projects</span><span class="stat-value">—</span></div>
+      <div class="stat-card"><span class="stat-label">Documents</span><span class="stat-value">—</span></div>
+      <div class="stat-card"><span class="stat-label">CRAFTED Revenue</span><span class="stat-value">—</span></div>
+      <div class="stat-card"><span class="stat-label">Daily Check</span><span class="stat-value">—</span></div>
+    </div>
+
+    <!-- Calendar & Recent Documents Row -->
+    <div class="home-bottom-grid">
+      <!-- Calendar Widget -->
+      <div class="section-block">
+        <div class="calendar-header">
+          <h2 class="section-heading">Upcoming Events</h2>
+          <span class="calendar-sync-badge" id="calSyncBadge" title="Synced with Google Calendar">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-3.36-7"/><polyline points="21 3 21 9 15 9"/></svg>
+            Google Calendar
+          </span>
+        </div>
+        <div class="calendar-widget" id="calendarWidget">
+          <!-- Mini month calendar -->
+          <div class="cal-month" id="calMonth">
+            <div class="cal-month-nav">
+              <button class="cal-nav-btn" id="calPrev" aria-label="Previous month">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <span class="cal-month-label" id="calMonthLabel">March 2026</span>
+              <button class="cal-nav-btn" id="calNext" aria-label="Next month">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+            <div class="cal-grid">
+              <span class="cal-dow">Mo</span><span class="cal-dow">Tu</span><span class="cal-dow">We</span><span class="cal-dow">Th</span><span class="cal-dow">Fr</span><span class="cal-dow">Sa</span><span class="cal-dow">Su</span>
+              <div id="calDays"></div>
+            </div>
+          </div>
+          <!-- Upcoming events list -->
+          <div class="cal-events" id="calEvents">
+            <div class="loading-spinner"><div class="spinner-ring"></div> Loading events...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Documents -->
+      <div class="section-block">
+        <h2 class="section-heading">Recent Documents</h2>
+        <div class="doc-list" id="recentDocsList">
+          <div class="loading-spinner"><div class="spinner-ring"></div> Loading...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DYNAMIC PROJECT VIEWS will be injected here -->
+  <div id="dynamicProjectViews"></div>
+
+  <!-- DOCUMENTS VIEW -->
+  <div class="view" id="view-docs">
+    <button class="back-btn" onclick="showView('home')">&larr; Back</button>
+    <h1 class="view-title">All Documents</h1>
+    <div class="doc-list" id="allDocsList">
+      <div class="loading-spinner"><div class="spinner-ring"></div> Loading documents...</div>
+    </div>
+  </div>
+
+  <!-- CALENDAR VIEW (full page) -->
+  <div class="view" id="view-calendar">
+    <button class="back-btn" onclick="showView('home')">&larr; Back</button>
+    <div class="calendar-header">
+      <h1 class="view-title" style="margin-bottom:0">Calendar</h1>
+      <span class="calendar-sync-badge" title="Synced with Google Calendar">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-3.36-7"/><polyline points="21 3 21 9 15 9"/></svg>
+        Google Calendar
+      </span>
+    </div>
+    <div class="calendar-full" id="calendarFull">
+      <div class="cal-month cal-month-full" id="calMonthFull">
+        <div class="cal-month-nav">
+          <button class="cal-nav-btn" id="calPrevFull" aria-label="Previous month">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <span class="cal-month-label" id="calMonthLabelFull">March 2026</span>
+          <button class="cal-nav-btn" id="calNextFull" aria-label="Next month">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+        <div class="cal-grid">
+          <span class="cal-dow">Mo</span><span class="cal-dow">Tu</span><span class="cal-dow">We</span><span class="cal-dow">Th</span><span class="cal-dow">Fr</span><span class="cal-dow">Sa</span><span class="cal-dow">Su</span>
+          <div id="calDaysFull"></div>
+        </div>
+      </div>
+      <div class="cal-events-full" id="calEventsFull">
+        <div class="loading-spinner"><div class="spinner-ring"></div> Loading events...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINANCE VIEW -->
+  <div class="view" id="view-finance">
+    <button class="back-btn" onclick="showView('home')">&larr; Back</button>
+    <h1 class="view-title">Finance Overview</h1>
+    <p class="view-sub">CRAFTED is the only active financial entity. Click below to view full dashboard.</p>
+    <button class="finance-link" onclick="showView('crafted')">Open CRAFTED Dashboard &rarr;</button>
+  </div>
+
+</main>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="bottom-nav" id="bottomNav">
+  <button class="bnav-btn active" onclick="showView('home');setActiveNav(this)">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-8 9 8M5 11v8a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-8"/></svg>
+    <span>Home</span>
+  </button>
+  <button class="bnav-btn" onclick="showView('crafted');setActiveNav(this)">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 010 7H6"/></svg>
+    <span>CRAFTED</span>
+  </button>
+  <button class="bnav-btn" onclick="showView('calendar');setActiveNav(this)">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span>Calendar</span>
+  </button>
+  <button class="bnav-btn" onclick="showView('docs');setActiveNav(this)">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+    <span>Docs</span>
+  </button>
+  <button class="bnav-btn" onclick="showView('home');setActiveNav(this)">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+    <span>Settings</span>
+  </button>
+</nav>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+</div><!-- /dashboard-wrapper -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+</body>
+</html>
